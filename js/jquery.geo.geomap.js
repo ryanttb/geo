@@ -600,6 +600,7 @@
           dy = size["height"]/2 - this._contentBounds.height/2,
           i;
 
+      // record the new size
       this._contentBounds = {
         x: parseInt(this._$elem.css("padding-left"), 10),
         y: parseInt(this._$elem.css("padding-top"), 10),
@@ -607,26 +608,31 @@
         height: size["height"]
       };
 
+      // resize the contentFrame, servicesContainer, eventTarget, & measureContainer 
       this._$resizeContainer.css( {
         width: size["width"],
         height: size["height"]
       } );
 
       for (i = 0; i < this._currentServices.length; i++) {
+        // ask all services to move their internals around
         $.geo["_serviceTypes"][this._currentServices[i].type].resize(this, this._currentServices[i], dx, dy);
       }
 
+      // resize any graphics container
       this._$elem.find( ".geo-graphics" ).css( {
         width: size["width"],
         height: size["height"]
       }).geographics( "resize", dx, dy );
 
       for (i = 0; i < this._drawPixels.length; i++) {
+        // reposition live drawing
         this._drawPixels[i][0] += dx;
         this._drawPixels[i][1] += dy;
       }
 
-      //this._setCenterAndSize(this._center, this._pixelSize, _trigger, true);
+      // refresh
+      this._setCenterAndSize(this._center, this._pixelSize, _trigger, true);
     },
 
     append: function ( shape, style, label, refresh ) {

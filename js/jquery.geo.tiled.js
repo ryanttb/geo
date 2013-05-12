@@ -246,8 +246,15 @@
       },
 
       resize: function (map, service, dx, dy) {
+        //
+        // I'm leaving this in as a branch: resize
+        // The resize function can totally be interactive and
+        // responsive at some point after 1.0 release, i.e.,
+        // move graphics and tiles and images around in real time
+        // as the browser window is resized
+        //
+
         // this will have to be similar to _interactiveTransform, but only move the scaleContainers
-                /*
         var serviceState = $.data( service, "geoServiceState" ),
             tilingScheme = map.options[ "tilingScheme" ];
 
@@ -255,7 +262,8 @@
           this._cancelUnloaded( map, service );
 
           serviceState.serviceContainer.children( ).each( function ( i ) {
-            var $scaleContainer = $(this),
+            var $scaleContainer = $(this);
+            /*
                 scalePixelSize = $scaleContainer.data("pixelSize"),
                 scaleRatio = scalePixelSize / pixelSize;
 
@@ -265,16 +273,14 @@
               var oldMapCoord = $scaleContainer.data("scaleOrigin"),
                   newPixelPoint = map._toPixel(oldMapCoord, center, pixelSize);
 
+                  */
               $scaleContainer.css( {
-                left: Math.round(newPixelPoint[0]) + "px",
-                top: Math.round(newPixelPoint[1]) + "px",
-                width: tilingScheme.tileWidth * scaleRatio,
-                height: tilingScheme.tileHeight * scaleRatio
+                left: parseInt( $scaleContainer.css( "left" ) ) + dx,
+                top: parseInt( $scaleContainer.css( "top" ) ) + dy
               } );
-            }
+            //}
           });
         }
-        */
       },
 
       opacity: function ( map, service ) {
